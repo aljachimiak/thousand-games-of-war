@@ -1,0 +1,20 @@
+{
+  "name": "thousand-hands-of-war",
+  "version": "0.0.1",
+  "description": "A zero dependency module that will play a game of war.  Designed to report back statistics on the game for later analysis.",
+  "main": "index.js",
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "author": "Al Jachimiak",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.23.0",
+    "xo": "^0.18.2"
+  },
+  "xo": {
+    "rules": {
+      "capitalized-comments": 0
+    }
+  }
+}
