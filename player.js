@@ -14,6 +14,7 @@ class Player {
 		let startA = 0;
 		let handValue = 0;
 		let highValues = 0;
+		const startingHand = this.hand.slice(0);
 
 		this.hand.forEach(card => {
 			switch (card.value) {
@@ -45,7 +46,8 @@ class Player {
 			startK,
 			startA,
 			handValue,
-			highValues
+			highValues,
+			startingHand
 		};
 	}
 }

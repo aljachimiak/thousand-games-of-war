@@ -41,3 +41,14 @@ test('player has accurate beginning stats', t => {
 	t.is(deckValue, player1.beginningStats.handValue);
 	t.is(deckHighValues, player1.beginningStats.highValues);
 });
+
+test('player beginning stats have accurate startingHand', t => {
+	t.plan(1);
+	const player1 = new Player('Al');
+	let deck = Cards.makeDeck(5);
+	deck = Cards.shuffle(deck);
+	player1.hand = deck;
+	player1.makeBeginningStats();
+
+	t.deepEqual(deck, player1.beginningStats.startingHand);
+});
