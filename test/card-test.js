@@ -1,5 +1,5 @@
 import test from 'ava';
-import Cards from '../cards';
+import Cards from '../lib/cards';
 
 test('a card has a name, val, and suit', t => {
 	t.plan(3);

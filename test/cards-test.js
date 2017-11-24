@@ -1,5 +1,5 @@
 import test from 'ava';
-import Cards from '../cards';
+import Cards from '../lib/cards';
 
 test('makeDeck returns a deck of the correct number of cards', t => {
 	t.plan(2);

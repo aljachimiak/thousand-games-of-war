@@ -1,4 +1,4 @@
-import Cards from './cards';
+import Cards from './lib/cards';
 
 class Player {
 	constructor(name) {

@@ -1,6 +1,6 @@
 import test from 'ava';
-import Cards from '../cards';
-import Player from '../player';
+import Cards from '../lib/cards';
+import Player from '../lib/player';
 
 test('player has a name', t => {
 	t.plan(1);
