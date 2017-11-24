@@ -50,11 +50,11 @@ function playManyGames(numGames = 1000) {
 		numGames = 1000;
 	}
 	if (numGames > 1000 || numGames < 1) {
-		numGames = 100;
+		numGames = 1000;
 	}
 
 	const gameStorage = [];
-	for (let i = 0; i < 1000; i++) {
+	for (let i = 0; i < numGames; i++) {
 		gameStorage.push(playGame());
 	}
 	return gameStorage;
@@ -65,7 +65,7 @@ function promiseManyGames(numGames = 1000) {
 		numGames = 1000;
 	}
 	if (numGames > 1000 || numGames < 1) {
-		numGames = 100;
+		numGames = 1000;
 	}
 
 	const games = [];
