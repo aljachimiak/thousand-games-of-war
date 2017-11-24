@@ -5,18 +5,6 @@
 import test from 'ava';
 import Thow from '../index';
 
-// let manyGamedata = [];
-// test.before(t => {
-// 	return Promise.resolve(null)
-// 		.then(() => {
-// 			return Thow.playManyGames();
-// 		})
-// 		.then(gameData => {
-// 			manyGamedata = gameData;
-// 			return null;
-// 		});
-// });
-
 test('playGame works', t => {
 	const gameData = Thow.playGame();
 	t.plan(2);
