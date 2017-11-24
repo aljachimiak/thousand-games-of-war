@@ -1,60 +1,88 @@
-import Cards from './lib/cards';
+'use strict';
+const Game = require('./lib/game');
 
-class Player {
-	constructor(name) {
-		this.name = name;
-		this.hand = [];
-		this.winnings = [];
-		this.shuffles = [];
-		this.beginningStats = {};
+module.exports = {
+	playGame,
+	playManyGames,
+	promiseManyGames
+};
+
+function playGame() {
+	const game = new Game();
+
+	while (!game.gameComplete) {
+		game.playHand(false);
 	}
 
-	makeBeginningStats() {
-		let startJ = 0;
-		let startQ = 0;
-		let startK = 0;
-		let startA = 0;
-		let handValue = 0;
-		let highValues = 0;
+	const totalTimeSec = game.gameEnd - game.gameStart;
+	const winningPlayer = game.players[game.gameWinner];
+	const loser = game.gameWinner === 1 ? 0 : 1;
+	const losingPlayer = game.players[loser];
 
-		this.hand.forEach(card => {
-			switch (card.value) {
-				case 11:
-					startJ++;
-					break;
-				case 12:
-					startQ++;
-					break;
-				case 13:
-					startK++;
-					break;
-				case 14:
-					startA++;
-					break;
-				default:
-					break;
-			}
+	const winnerHandValue = winningPlayer.beginningStats.handValue;
+	const loserHandValue = losingPlayer.beginningStats.handValue;
 
-			handValue += card.value;
+	const winnerHighValue = winningPlayer.beginningStats.highValues;
+	const loserHighValue = losingPlayer.beginningStats.highValues;
 
-			if (card.value > 7) {
-				highValues += card.value;
-			}
-		});
-		this.beginningStats = {
-			startJ,
-			startQ,
-			startK,
-			startA,
-			handValue,
-			highValues
-		};
-	}
+	let report = '============ GAME OVER =============\n';
+	report += `Game Stats:\n`;
+	report += `Total Hands: ${game.numHands}\n`;
+	report += `Elapsed Time: ${totalTimeSec} ms\n`;
+	report += `Hands per ms: ${game.numHands / totalTimeSec}\n`;
+	report += `Number of Ties: ${game.numTies}\n`;
+	report += '-------------------------------------\n';
+	report += `Winner: ${winningPlayer.name}\n`;
+	report += `Number of Shuffles: ${winningPlayer.shuffles.length}\n`;
+	report += `Shuffles: ${winningPlayer.shuffles.join(', ')}\n`;
+	Object.keys(winningPlayer.beginningStats).forEach(stat => {
+		report += `${stat}: ${winningPlayer.beginningStats[stat]}\n`;
+	});
+	report += `Hand Value: winner ${winnerHandValue} : ${loserHandValue}\n`;
+	report += `High Hand Value: winner ${winnerHighValue} : ${loserHighValue}\n`;
+
+	report += '=====================================\n';
+	return {game, report};
 }
 
-const deck = Cards.makeDeck(52);
-const player1 = new Player('Ali');
-const player2 = new Player('Bob');
+function playManyGames(numGames = 1000) {
+	if (!Number.isInteger(numGames)) {
+		numGames = 1000;
+	}
+	if (numGames > 1000 || numGames < 1) {
+		numGames = 100;
+	}
 
-console.log(deck);
-console.log(player1, player2);
+	const gameStorage = [];
+	for (let i = 0; i < 1000; i++) {
+		gameStorage.push(playGame());
+	}
+	return gameStorage;
+}
+
+function promiseManyGames(numGames = 1000) {
+	if (!Number.isInteger(numGames)) {
+		numGames = 1000;
+	}
+	if (numGames > 1000 || numGames < 1) {
+		numGames = 100;
+	}
+
+	const games = [];
+
+	function promiseGame() {
+		return Promise.resolve()
+			.then(() => {
+				return playGame();
+			});
+	}
+
+	for (let i = 0; i < numGames; i++) {
+		games.push(promiseGame());
+	}
+
+	return Promise.resolve(null)
+		.then(() => {
+			return Promise.all(games);
+		});
+}
