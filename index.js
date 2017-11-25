@@ -1,12 +1,15 @@
 'use strict';
 const Game = require('./lib/game');
+const Cards = require('./lib/cards');
 
 module.exports = {
 	playGame,
 	playManyGames,
-	promiseManyGames
+	promiseManyGames,
+	Cards
 };
 
+// todo: make playGame accept a specified deck
 function playGame() {
 	const game = new Game();
 
@@ -45,6 +48,7 @@ function playGame() {
 	return {game, report};
 }
 
+// todo: make playManyGames accept a specified deck
 function playManyGames(numGames = 1000) {
 	if (!Number.isInteger(numGames)) {
 		numGames = 1000;
@@ -60,6 +64,7 @@ function playManyGames(numGames = 1000) {
 	return gameStorage;
 }
 
+// todo: make playManyGames accept a specified deck
 function promiseManyGames(numGames = 1000) {
 	if (!Number.isInteger(numGames)) {
 		numGames = 1000;

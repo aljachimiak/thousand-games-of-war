@@ -24,3 +24,9 @@ test('promiseManyGames works', async t => {
 	t.plan(1);
 	t.is(1000, manyGameData.length);
 });
+
+test.todo('in a game playhand calls playhand');
+test.todo('in a game playhand calls compareTable');
+test.todo('in a game playhand calls emptyTable');
+test.todo('in a game placeCardsOnTable calls checkHand');
+test.todo('in a game with hands of equivalent order and value, a reshuffle occurs');
