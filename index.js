@@ -6,6 +6,8 @@ module.exports = {
 	playGame,
 	playManyGames,
 	promiseManyGames,
+	playThousandGames,
+	promiseThousandGames,
 	Cards
 };
 
@@ -90,4 +92,12 @@ function promiseManyGames(numGames = 1000) {
 		.then(() => {
 			return Promise.all(games);
 		});
+}
+
+function playThousandGames() {
+	return playManyGames();
+}
+
+function promiseThousandGames() {
+	return promiseManyGames();
 }
