@@ -1,6 +1,6 @@
 {
-  "name": "thousand-hands-of-war",
-  "version": "0.0.1",
+  "name": "thousand-games-of-war",
+  "version": "0.0.2",
   "description": "A zero dependency module that will play a game of war.  Designed to report back statistics on the game for later analysis.",
   "main": "index.js",
   "scripts": {
