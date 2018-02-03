@@ -86,16 +86,29 @@ function promiseManyGames(numGames = 1000, deck = {}) {
 	}
 
 	const games = [];
+	const options = {deck};
+	let decks;
 
-	function promiseGame() {
+	if (Cards.isDeck(deck)) {
+		decks = [];
+		for (let i = 0; i < numGames; i++) {
+			const newDeck = deck.slice(0);
+			decks.push(newDeck);
+		}
+	}
+
+	function promiseGame(args) {
 		return Promise.resolve()
 			.then(() => {
-				return playGame(deck);
+				return playGame(args);
 			});
 	}
 
-	for (let i = 0; i < numGames; i++) {
-		games.push(promiseGame());
+	for (let j = 0; j < numGames; j++) {
+		if (decks) {
+			options.deck = decks[j];
+		}
+		games.push(promiseGame(options));
 	}
 
 	return Promise.resolve(null)

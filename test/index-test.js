@@ -89,6 +89,29 @@ test('playManyGames passes specified deck', t => {
 	t.deepEqual(player1FirstHand, player1LastHand);
 });
 
+test('promiseManyGames passes a specified deck', async t => {
+	t.plan(3);
+	const numGames = 500;
+
+	let deck = Tgow.Cards.makeDeck();
+	deck = Tgow.Cards.shuffle(deck);
+	const referenceDeck = deck.slice(0);
+
+	const gameData = await Tgow.promiseManyGames(numGames, deck);
+	const game = gameData[0].game;
+
+	// deal uses Array.push to put cards in the deck
+	// this places the top of the referenceDeck to
+	// go to the back of the player's hand
+	const lastIndex = game.players[0].beginningStats.startingHand.length - 1;
+	t.is(game.players[0].beginningStats.startingHand[lastIndex], referenceDeck[0]);
+	t.is(game.players[1].beginningStats.startingHand[lastIndex], referenceDeck[1]);
+
+	const player1FirstHand = gameData[0].game.players[0].beginningStats.startingHand;
+	const player1LastHand = gameData[1].game.players[0].beginningStats.startingHand;
+	t.deepEqual(player1FirstHand, player1LastHand);
+});
+
 test.todo('in a game playhand calls playhand');
 test.todo('in a game playhand calls compareTable');
 test.todo('in a game playhand calls emptyTable');
