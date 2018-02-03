@@ -29,23 +29,19 @@ function playGame(options = {}) {
 	const winnerHighValue = winningPlayer.beginningStats.highValues;
 	const loserHighValue = losingPlayer.beginningStats.highValues;
 
-	let report = '============ GAME OVER =============\n';
-	report += `Game Stats:\n`;
-	report += `Total Hands: ${game.numHands}\n`;
-	report += `Elapsed Time: ${totalTimeSec} ms\n`;
-	report += `Hands per ms: ${game.numHands / totalTimeSec}\n`;
-	report += `Number of Ties: ${game.numTies}\n`;
-	report += '-------------------------------------\n';
-	report += `Winner: ${winningPlayer.name}\n`;
-	report += `Number of Shuffles: ${winningPlayer.shuffles.length}\n`;
-	report += `Shuffles: ${winningPlayer.shuffles.join(', ')}\n`;
-	Object.keys(winningPlayer.beginningStats).forEach(stat => {
-		report += `${stat}: ${winningPlayer.beginningStats[stat]}\n`;
-	});
-	report += `Hand Value: winner ${winnerHandValue} : ${loserHandValue}\n`;
-	report += `High Hand Value: winner ${winnerHighValue} : ${loserHighValue}\n`;
+	const report = {
+		totalHands: game.numHands,
+		reportedTimeMs: totalTimeSec,
+		numTies: game.numTies,
+		winnerName: winningPlayer.name,
+		winnerNumShuffles: winningPlayer.shuffles.length,
+		winnerShuffles: winningPlayer.shuffles.join(', '),
+		handValueWinner: winnerHandValue,
+		handValueLoser: loserHandValue,
+		highCardsValueWinner: winnerHighValue,
+		highCardsValueLoser: loserHighValue
+	};
 
-	report += '=====================================\n';
 	return {game, report};
 }
 
