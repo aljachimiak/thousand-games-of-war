@@ -7,9 +7,8 @@ import Tgow from '../index';
 
 test('playGame works', t => {
 	const gameData = Tgow.playGame();
-	t.plan(2);
+	t.plan(1);
 	t.is(2, Object.keys(gameData).length);
-	t.is(true, true);
 });
 
 test('playManyGames works', t => {
@@ -46,6 +45,24 @@ test('promiseThousandGames works', async t => {
 	const gameData = await Tgow.promiseThousandGames();
 	t.plan(1);
 	t.is(1000, gameData.length);
+});
+
+test('playGame passes specified deck to playGame', t => {
+	let deck = Tgow.Cards.makeDeck();
+	deck = Tgow.Cards.shuffle(deck);
+	const referenceDeck = deck.slice(0);
+	const options = {deck};
+
+	const gameData = Tgow.playGame(options);
+	const game = gameData.game;
+
+	// deal uses Array.push to put cards in the deck
+	// this places the top of the referenceDeck to
+	// go to the back of the player's hand
+	const lastIndex = game.players[0].beginningStats.startingHand.length - 1;
+	t.is(game.players[0].beginningStats.startingHand[lastIndex], referenceDeck[0]);
+	t.is(game.players[1].beginningStats.startingHand[lastIndex], referenceDeck[1]);
+	t.is(2, Object.keys(gameData).length);
 });
 
 test.todo('in a game playhand calls playhand');

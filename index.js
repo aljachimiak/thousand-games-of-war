@@ -11,9 +11,8 @@ module.exports = {
 	Cards
 };
 
-// todo: make playGame accept a specified deck
-function playGame() {
-	const game = new Game();
+function playGame(options = {}) {
+	const game = new Game(options);
 
 	while (!game.gameComplete) {
 		game.playHand(false);
