@@ -49,8 +49,7 @@ function playGame(options = {}) {
 	return {game, report};
 }
 
-// todo: make playManyGames accept a specified deck
-function playManyGames(numGames = 1000) {
+function playManyGames(numGames = 1000, deck = {}) {
 	if (!Number.isInteger(numGames)) {
 		numGames = 1000;
 	}
@@ -58,15 +57,27 @@ function playManyGames(numGames = 1000) {
 		numGames = 1000;
 	}
 
+	const options = {deck};
+	let decks;
+
+	if (Cards.isDeck(deck)) {
+		decks = [];
+		for (let i = 0; i < numGames; i++) {
+			const newDeck = deck.slice(0);
+			decks.push(newDeck);
+		}
+	}
 	const gameStorage = [];
-	for (let i = 0; i < numGames; i++) {
-		gameStorage.push(playGame());
+	for (let j = 0; j < numGames; j++) {
+		if (decks) {
+			options.deck = decks[j];
+		}
+		gameStorage.push(playGame(options));
 	}
 	return gameStorage;
 }
 
-// todo: make playManyGames accept a specified deck
-function promiseManyGames(numGames = 1000) {
+function promiseManyGames(numGames = 1000, deck = {}) {
 	if (!Number.isInteger(numGames)) {
 		numGames = 1000;
 	}
@@ -79,7 +90,7 @@ function promiseManyGames(numGames = 1000) {
 	function promiseGame() {
 		return Promise.resolve()
 			.then(() => {
-				return playGame();
+				return playGame(deck);
 			});
 	}
 
@@ -93,10 +104,10 @@ function promiseManyGames(numGames = 1000) {
 		});
 }
 
-function playThousandGames() {
-	return playManyGames();
+function playThousandGames(deck = {}) {
+	return playManyGames(1000, deck);
 }
 
-function promiseThousandGames() {
-	return promiseManyGames();
+function promiseThousandGames(deck = {}) {
+	return promiseManyGames(1000, deck);
 }
