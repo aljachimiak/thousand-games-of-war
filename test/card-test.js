@@ -14,3 +14,31 @@ test('a card has a name, val, and suit', t => {
 	const suit = card.suit;
 	t.is(true, card.name().indexOf(suit) > -1);
 });
+
+test('isDeck correctly determines non-array is false', t => {
+	t.plan(2);
+	const strNotDeck = 'blerp';
+	const emptyObj = {};
+
+	t.is(false, Cards.isDeck(strNotDeck));
+	t.is(false, Cards.isDeck(emptyObj));
+});
+
+test('An Array, with a noncard item is not a deck', t => {
+	t.plan(2);
+
+	const badDeck = Cards.makeDeck(10);
+	badDeck[badDeck.length] = 'joker';
+
+	t.is(false, Cards.isDeck(badDeck));
+
+	const shuffledBadDeck = Cards.shuffle(badDeck);
+	t.is(false, Cards.isDeck(shuffledBadDeck));
+});
+
+test('isDeck thinks that makeDeck actually makes a real deck', t => {
+	t.plan(1);
+
+	const goodDeck = Cards.makeDeck(10);
+	t.is(true, Cards.isDeck(goodDeck));
+});
