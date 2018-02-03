@@ -78,3 +78,10 @@ test('isDeck thinks that makeDeck actually makes a real deck', t => {
 	const goodDeck = Cards.makeDeck(10);
 	t.is(true, Cards.isDeck(goodDeck));
 });
+
+test('isDeck correctly identifies that an empty array is not a deck', t => {
+	t.plan(1);
+
+	const empty = [];
+	t.is(false, Cards.isDeck(empty));
+});
