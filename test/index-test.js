@@ -157,8 +157,7 @@ test('promiseThousandGames passes a specified deck', async t => {
 	const player1LastHand = gameData[1].game.players[0].beginningStats.startingHand;
 	t.deepEqual(player1FirstHand, player1LastHand);
 });
-test.todo('in a game playhand calls playhand');
-test.todo('in a game playhand calls compareTable');
-test.todo('in a game playhand calls emptyTable');
-test.todo('in a game placeCardsOnTable calls checkHand');
+test.todo('Deck string in report matches game deck');
+test.todo('Deck Class in report matches gasme deck');
+test.todo('Dealing a deck from deckString results in beginning hands of players.');
 test.todo('in a game with hands of equivalent order and value, a reshuffle occurs');

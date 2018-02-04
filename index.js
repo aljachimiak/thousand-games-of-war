@@ -1,6 +1,7 @@
 'use strict';
 const Game = require('./lib/game');
 const Cards = require('./lib/cards');
+const DeckUtils = require('./lib/deck-utils');
 
 module.exports = {
 	playGame,
@@ -29,6 +30,14 @@ function playGame(options = {}) {
 	const winnerHighValue = winningPlayer.beginningStats.highValues;
 	const loserHighValue = losingPlayer.beginningStats.highValues;
 
+	let deckString = '';
+	let deckClass = '';
+
+	game.deck.forEach(c => {
+		deckString += DeckUtils.stringifyCard(c);
+		deckClass += DeckUtils.classifyCard(c);
+	});
+
 	const report = {
 		totalHands: game.numHands,
 		reportedTimeMs: totalTimeSec,
@@ -39,7 +48,9 @@ function playGame(options = {}) {
 		handValueWinner: winnerHandValue,
 		handValueLoser: loserHandValue,
 		highCardsValueWinner: winnerHighValue,
-		highCardsValueLoser: loserHighValue
+		highCardsValueLoser: loserHighValue,
+		deckString,
+		deckClass
 	};
 
 	return {game, report};
